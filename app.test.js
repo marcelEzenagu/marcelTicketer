@@ -3,9 +3,14 @@ const start = require('./index')
 const express = require("express")
 const app = require("./index")
 const connectDB = require("./db/db")
+const Order = require("./model/Order")
 
 beforeAll(() => {
     return connectDB(process.env.MONGODB)
+})
+
+beforeEach(() => {
+    return Order.deleteMany({})
 })
 
 describe("Place Orders API", () => {
