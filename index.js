@@ -5,9 +5,12 @@ const Order = require('./model/Order');
 const orderRouter = require("./routes");
 
 const app = express();
-    app.use(express.json());
+
+// middleware
+app.use(express.json());
     app.use(express.urlencoded());
-// routes
+
+    // routes
 
 
 app.use(orderRouter)

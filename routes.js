@@ -1,13 +1,19 @@
 const express = require('express')
+const Order = require('./model/Order')
 
 const orderRouter = express.Router()
 
 
-orderRouter.get("/orders?page=:page&limit=:limit", async(req, res) => {
+orderRouter.get("/orders", async(req, res) => {
     const {page, limit} = req.query
-    
-        console.log("query params:", req.query)
     try {
+        // checking that query params are not invalid
+        
+        if ((page == parseInt(page) && Number(page) != 1) || !(limit == parseInt(limit) && page == parseInt(page))) {
+            return res.status(400).send({error:"Wrong query parameters"})
+        
+        }
+
         result = await Order.find()
         
         return res.status(200).json(result)

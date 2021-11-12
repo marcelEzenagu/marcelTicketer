@@ -85,17 +85,37 @@ describe("Take Order API", () => {
     })
 
     describe("Order list", () => {
-        it("GET /orders?page=:page&limit=:limit", () =>{
-            return request(app).get('/orders?page=1&limit=5')
+        describe("Order List, all goes well", () => {
+
+            it("GET /orders?page=:page&limit=:limit", () =>{
+                return request(app).get('/orders?page=1&limit=5')
                 .expect("Content-Type", /json/)
                 .expect(200)
-                // .then(res => {
-                //     expect(res.body).toEqual(
-                //         expect.arrayContaining([
+            })
+        });
 
-                //         ])
-                //     )
+        describe("Order List, empty or wrongs query params", () => {
+
+            it("GET /orders?page=:page&limit=:limit", () =>{
+                return request(app).get('/orders?page=y&limit=9')
+                .expect("Content-Type", /json/)
+                .expect(400).then(res => {
+                    expect(res.body.error).toBe("Wrong query parameters")
+                })
+            })
+        })
+
+        
+        describe("Order List, page of query params != 1", () => {
+
+            it("GET /orders?page=:page&limit=:limit", () =>{
+                return request(app).get('/orders?page=y&limit=9')
+                .expect("Content-Type", /json/)
+                .expect(400)
+                // .then(res => {
+                //     expect(res.body.error).toBe("Page in the query parameters must be 1")
                 // })
+            })
         })
     })
 })
